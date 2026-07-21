@@ -1,0 +1,32 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-amd64:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.5"
+          cache: true
+      - name: Build and test
+        shell: powershell
+        run: .\build.ps1 -SkipSigning
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: DualCenter-windows-amd64
+          path: |
+            dist\DualCenter-Setup-*.exe
+            dist\DualCenter-*-SHA256SUMS.txt
+          if-no-files-found: error

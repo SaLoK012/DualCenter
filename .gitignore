@@ -1,0 +1,9 @@
+/dist/
+/installer/payload/DualCenter.exe
+/resource_amd64.syso
+/installer/resource_amd64.syso
+*.new
+*.previous
+*.tmp
+*.test.exe
+DualCenter.log*
